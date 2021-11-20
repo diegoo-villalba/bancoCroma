@@ -1,0 +1,30 @@
+{
+	"folders": {},
+	"connections": {
+		"sqlite_jdbc-17c71b4612f-55fcbec3b07f7c64": {
+			"provider": "sqlite",
+			"driver": "sqlite_jdbc",
+			"name": "cuentas",
+			"save-password": true,
+			"read-only": false,
+			"configuration": {
+				"database": "/home/diegont/eclipse-workspace/CuentasBancarias/cuentas",
+				"url": "jdbc:sqlite:/home/diegont/eclipse-workspace/CuentasBancarias/cuentas",
+				"type": "dev",
+				"auth-model": "native",
+				"handlers": {}
+			}
+		}
+	},
+	"connection-types": {
+		"dev": {
+			"name": "Development",
+			"color": "255,255,255",
+			"description": "Regular development database",
+			"auto-commit": true,
+			"confirm-execute": false,
+			"confirm-data-change": false,
+			"auto-close-transactions": false
+		}
+	}
+}

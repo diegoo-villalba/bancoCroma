@@ -1,0 +1,74 @@
+Capítulo I: Estructuras de Datos
+
+Una Cuenta posee un saldo. Se puede agregar dinero a la Cuenta, incrementando el saldo. También se puede retirar dinero de la Cuenta, decrementando dicho saldo.
+Debe poderse resolver la siguiente secuencia de acciones:
+
+Creación de una Cuenta nueva, saldo == 0.
+Acreditación de $ 1000, saldo == 1000.
+Retiro de $ 550, saldo == 450.
+
+    // main
+    Cuenta miCuenta = new Cuenta();
+    System.out.println(miCuenta.saldo); // 0
+
+    miCuenta.saldo += 1000;
+    System.out.println(miCuenta.saldo); // 1000
+
+    miCuenta.saldo -= 550;
+    System.out.println(miCuenta.saldo); // 450
+    
+Hemos visto las falencias del diseño anterior, y luego de investigar un poco nos encontramos con el concepto de Encapsulamiento. ¡Es una buena ocasión para incorporarlo!
+Se pide que utilicemos este concepto para asegurarnos de las siguientes restricciones del dominio del problema:
+
+No puedo extraer dinero que no poseo
+No puedo extraer ni depositar dinero negativo
+El saldo no puede afectarse más allá que por depósitos o extracciones
+
+Es común transferir dinero entre cuentas bancarias. Para ello, debemos dotar a 
+nuestro modelo con dicha funcionalidad. Cuando querramos transferir un monto, deberá verificarse 
+que la operación puede realizarse, y deberá acreditarse directamente en la cuenta destino. 
+El código para dicha operación se verá similar a este:
+
+    // main
+    Cuenta cuentaOrigen = new Cuenta();
+    cuentaOrigen.depositar(10000);
+    System.out.println(cuentaOrigen.consultarSaldo()); // 10000
+
+    Cuenta cuentaDestino = new Cuenta();
+    System.out.println(cuentaDestino.consultarSaldo()); // 0
+
+    cuentaOrigen.transferir(550, cuentaDestino);
+    System.out.println(cuentaOrigen.consultarSaldo()); // 9450
+    System.out.println(cuentaDestino.consultarSaldo()); // 550
+    
+    Esta vez necesitamos modelar dos nuevos tipos de cuenta:
+
+	CuentaDeAhorros: que permite reservar parte del saldo para que no esté disponible, 
+	en una especie de saldo secundario. Se puede disponer de ese saldo normalmente una 
+	vez que se reintegre (a pedido del cliente) al saldo total de la cuenta.
+	
+	CuentaCorriente: que permite retirar todo lo disponible, y un descubierto de hasta 
+	cierta cantidad de dinero extra. El monto “en descubierto” se establece al momento 
+	de la apertura de la cuenta.
+	
+Parte 1
+El banco decide comenzar a registrar las transacciones individualmente, por lo que 
+necesitaremos mantener un registro de cada acreditación o débito en la cuenta. 
+Esto debe suceder para todos los tipos de cuenta. De la transacción se desea 
+conocer el motivo y el monto. Es importante mantenerlas ordenadas. No es 
+importante saber la fecha en la que se realizó, pero sería bueno hacerlo.
+
+Parte 2
+Ahora que tenemos registro de transacciones, podemos incorporar nuevos productos
+bancarios:
+
+Tarjetas de Débito, las cuales tienen una cuenta asociada y retiran dinero de 
+ella al efectuar una compra.
+Tarjetas de Crédito, las cuales permiten acumular compras hasta el momento en 
+el que finalmente se debitan de la cuenta, donde se cobra el total más una comisión 
+del 3% sobre el total comprado en concepto de gastos administrativos.
+Plazos Fijos, que nos privan de cierto monto de dinero, pero al momento de 
+acreditarse se reintegran con un interés adicional al capital reservado. El 
+interés actualmente es del 36% anual, pero vamos a integrar mensualmente.
+
+    
